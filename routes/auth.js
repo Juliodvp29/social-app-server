@@ -17,7 +17,12 @@ router.post("/register", async (req, res) => {
 
   try {
     const savedUser = await newUser.save();
-    res.status(201).json(savedUser);
+    res.status(201).json({
+      status: true,
+      result: {
+        savedUser,
+      },
+    });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -48,13 +53,10 @@ router.post("/login", async (re, res) => {
         { expiresIn: "24h" }
       );
       res.status(200).json({
-        message: "Welcome",
-        token,
-        user: {
-          id: user._id,
-          name: user.name,
+        status: true,
+        result: {
+          token,
           username: user.username,
-          email: user.email,
         },
       });
     }
