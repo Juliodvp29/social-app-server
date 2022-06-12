@@ -9,10 +9,15 @@ router.post("/register", async (req, res) => {
     name: req.body.name,
     username: req.body.username,
     email: req.body.email,
+    birthdate: req.body.birthdate,
+
     password: CryptoJS.AES.encrypt(
       req.body.password,
       process.env.PASS_SEC
     ).toString(),
+    imgProfile: req.body.imgProfile,
+    followers: req.body.followers,
+    following: req.body.following
   });
 
   try {

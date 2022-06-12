@@ -2,8 +2,6 @@ const router = require("express").Router();
 const User = require("../models/User");
 const { verifyToken } = require("./verifyToken");
 
-
-
 // UPDATE USER
 router.put("/:id", verifyToken, async (req, res) => {
   if (req.body.password) {
@@ -52,6 +50,30 @@ router.get("/", async (req, res) => {
   try {
     const users = await User.find();
     res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// GET FOLLOWERS OF USER
+
+router.get("/:id/followers", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    const followers = await User.find({ _id: { $in: user.followers } });
+    res.status(200).json(followers);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// GET FOLLOWING OF USER
+
+router.get("/:id/following", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    const following = await User.find({ _id: { $in: user.following } });
+    res.status(200).json(following);
   } catch (err) {
     res.status(500).json(err);
   }
