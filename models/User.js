@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     birthdate: { type: String, required: true },
     password: { type: String, required: true },
-    imgProfile: { type: String, default: "" },
+    imgProfile: { type: String, required: false },
     followers: { type: [String], default: [] },
     following: { type: [String], default: [] },
     createdAt: { type: Date, default: Date.now },
@@ -16,3 +16,5 @@ const UserSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("User", UserSchema);
+
+

@@ -10,16 +10,14 @@ router.post("/register", async (req, res) => {
     username: req.body.username,
     email: req.body.email,
     birthdate: req.body.birthdate,
-
     password: CryptoJS.AES.encrypt(
       req.body.password,
       process.env.PASS_SEC
     ).toString(),
-    imgProfile: req.body.imgProfile,
+    imgProfile: req.body.file,
     followers: req.body.followers,
-    following: req.body.following
+    following: req.body.following,
   });
-
   try {
     const savedUser = await newUser.save();
     res.status(201).json({
@@ -29,7 +27,10 @@ router.post("/register", async (req, res) => {
       },
     });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({
+      status: false,
+      message: err.message,
+    });
   }
 });
 
